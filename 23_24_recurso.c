@@ -17,7 +17,7 @@ int main() {
 }
 
 // 1. (questão sobre ficheiros)
-/*
+
 
 int f_livraria (char *f_texto, char *f_binario) {
 
@@ -32,7 +32,7 @@ int f_livraria (char *f_texto, char *f_binario) {
 
    char nome_livro_txt[100];
    int id_txt;
-   float preco_txt;
+   float preco_txt, media_consola, soma_consola;
 
    int n_autores, i, n_livros_local;
    autor atual;
@@ -46,18 +46,30 @@ int f_livraria (char *f_texto, char *f_binario) {
       fread(&atual, sizeof(autor), 1, f_bin);
       // aqui, vamos iterar sobre cada um dos autores do f_bin
 
-      n_livros_local = 0; // entrar no while com a quant de livros a 0
-
       rewind(f_txt); // começar a ler os livros no inicio do ficheiro
+
+      n_livros_local = 0; // entrar no while com a quant de livros a 0
+      soma_consola = 0;
+      media_consola = 0;
       
       while (fscanf(f_txt, " %99[^#]# %d # %f ", nome_livro_txt, &id_txt, &preco_txt) == 3) {
          if (atual.idA == id_txt) {
             n_livros_local++;
+            soma_consola += preco_txt;
          }
 
          //rewind(f_txt); aqui esta errado!
          
       } // aqui temos n_livros_local com o valor correto da quant de livros para por no f_bin
+
+      if (n_livros_local > 0) {
+         media_consola = soma_consola / n_livros_local;
+      } else {
+         media_consola = 0;
+      }
+
+      
+      printf("Autor: %s\tPreco medio dos livros: %.2f\n", atual.nome, media_consola);
 
       if (n_livros_local != atual.nLivros) { // so vamos alterar se o valor estiver errado
 
@@ -75,7 +87,7 @@ int f_livraria (char *f_texto, char *f_binario) {
    return 1;
 }
 
-*/
+
 
 
 
