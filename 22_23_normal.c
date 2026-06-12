@@ -2,6 +2,7 @@
 // 2025140643, ISEC - PT
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct {int h, m;} tempo; 
 typedef struct Voo voo; 
@@ -24,6 +25,7 @@ voo *f_aeroporto (char *f_binario, tempo hora_atual, char dest[4], int *tam) {
 
    FILE *f_bin = fopen(f_binario, "rb+"); if (!f_bin) return NULL;
 
+   int i;
    voo atual;
    *tam = 0;
 
@@ -62,6 +64,11 @@ voo *f_aeroporto (char *f_binario, tempo hora_atual, char dest[4], int *tam) {
    // inicio do ponto ii)
    // vamos criar um array dinamico
 
+   if (*tam == 0) {
+      fclose(f_bin);
+      return NULL;
+   }
+
    voo *vetor = malloc((*tam) * sizeof(voo)); 
    if (!vetor) {
       fclose(f_bin);
@@ -70,18 +77,20 @@ voo *f_aeroporto (char *f_binario, tempo hora_atual, char dest[4], int *tam) {
 
    rewind(f_bin);
 
+   i = 0;
+
    while (fread(&atual, sizeof(voo), 1, f_bin) == 1) {
 
       if (strcmp (atual.destino, dest) == 0) {
-         
+         vetor[i] = atual;
+         i++;
       }
-      
    }
    
    
    
    fclose(f_bin);
-   return; // vamos meter aqui o array dinamico
+   return vetor; // vamos meter aqui o array dinamico
 }
 
 
