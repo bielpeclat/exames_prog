@@ -17,7 +17,7 @@ int main() {
 }
 
 // 1. (questão sobre ficheiros)
-
+/*
 
 int f_livraria (char *f_texto, char *f_binario) {
 
@@ -86,7 +86,7 @@ int f_livraria (char *f_texto, char *f_binario) {
    fclose(f_bin);
    return 1;
 }
-
+*/
 
 
 
