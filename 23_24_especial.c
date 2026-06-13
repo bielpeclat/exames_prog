@@ -14,6 +14,28 @@ struct Artigo{
     data venda;   // Data em que foi realizada a última venda 
 };
 
+typedef struct {int mes, ano;} data; 
+typedef struct gestor no, *pno; 
+ 
+struct gestor{ 
+    int idG; 
+    struct emCurso *v1; 
+    struct completo *v2; 
+    int totV1, totV2; 
+    pno prox; 
+}; 
+ 
+struct emCurso{ 
+    int id;  
+    data inicio; 
+}; 
+ 
+struct completo{ 
+    int id; 
+    data final; 
+    int duracao; 
+};
+
 int main() {
 
    printf("estudasses!\n");
@@ -21,6 +43,7 @@ int main() {
    return 0;
 }
 
+// ex.1 (ficheiros)
 float f_vendas (char *f_texto, char *f_binario, data agora) {
 
    FILE *f_bin = fopen(f_binario, "rb+"); if (!f_bin) return -1;
@@ -79,3 +102,66 @@ float f_vendas (char *f_texto, char *f_binario, data agora) {
 
    return total_vendas;
 }
+
+// ex.2 (listas ligadas)
+// imprimir o estado de um projeto passado por parametro (concluido ou nao concluido)
+// e o identificador do gestor
+void mostra_projeto (pno gestores, int id_proj) {
+
+   int encontrado = 0, i, j;
+
+   pno atual_gestor = NULL;
+   atual_gestor = gestores;
+
+   struct emCurso *atual_emCurso = NULL;
+   struct completo *atual_completo = NULL;
+
+   while (atual_gestor != NULL) { // aqui iteramos sobre os gestores
+
+      if (encontrado == 1) break;
+
+      // agora precisamos iterar sobre os emCurso e os completos
+      
+      // vamos começar pelos emCurso
+      if (atual_gestor->v1 != NULL && encontrado == 0) {
+
+         atual_emCurso = atual_gestor->v1;
+
+         for (i = 0; i < atual_gestor->totV1; i++) { // procura no emCurso
+
+            if (atual_emCurso[i].id > id_proj) break; // o id_proj nao esta aqui
+            
+            if (atual_emCurso[i].id == id_proj) {
+               printf("Projeto: %d | Estado: %s | ID do gestor: %d\n", atual_emCurso[i].id, "Em curso", atual_gestor->idG);
+               encontrado = 1;
+               break;
+            }
+         }
+         
+      }
+
+      // agora vamos procurar nos projetos ja finalizados
+      if (atual_gestor->v2 != NULL && encontrado == 0) {
+
+         atual_completo = atual_gestor->v2;
+
+         for (i = 0; i < atual_gestor->totV2; i++) {
+
+            if (atual_completo[i].id > id_proj) break; // o id_proj nao esta aqui
+
+            if (atual_completo[i].id == id_proj) {
+               printf("Projeto: %d | Estado: %s | ID do gestor: %d\n", atual_completo[i].id, "Concluido", atual_gestor->idG);
+               encontrado = 1;
+               break;
+            }
+         }
+      }
+      atual_gestor = atual_gestor->prox;
+   }
+   if (encontrado == 0) {
+         printf("Inexistente");
+   }
+} // tudo certo logo na primeira tentativa :)
+
+
+
