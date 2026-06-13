@@ -129,5 +129,7 @@ void mostra_alunos (pno cadeiras, pAluno alunos, int tam) {
    
 }
 
+// ex. 3 (listas ligadas)
+
 
 
