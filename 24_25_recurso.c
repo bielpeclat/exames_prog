@@ -2,7 +2,7 @@
 // 2025140643, ISEC - PT
 
 // 1. (pergunta sobre ficheiros)
-/*
+
 
 #include <stdio.h>
 typedef struct drone dr;
@@ -13,6 +13,21 @@ struct drone {
     char eficiente;   // 'S' se eficiente, 'N' caso contrário 
 }; 
 
+typedef struct disciplina no, *pno; 
+typedef struct pessoa aluno, *pAluno; 
+ 
+struct pessoa{ 
+    char nome[100];     // Nome do aluno 
+    int num;            // Número do aluno    
+    pno v[3];           // Ponteiros para as disciplinas a que está inscrito 
+}; 
+ 
+struct disciplina{ 
+    char nome[100];     // Nome da disciplina 
+    int id, conta;      // ID da disciplina e contador de alunos inscritos 
+    pno prox; 
+};
+
 int main() {
 
    printf("gabriel peclat\n2025140643, isec, pt");
@@ -20,6 +35,7 @@ int main() {
    return 0;
 }
 
+// ex. 1 (ficheiros)
 int f_drones(char *f_texto, char *f_binario) {
 
    FILE *f_txt = fopen(f_texto, "r"); if (!f_txt) return 0;
@@ -76,7 +92,42 @@ int f_drones(char *f_texto, char *f_binario) {
    return 1;
 }
 
-*/
+// ex.2 (listas ligadas)
+void mostra_alunos (pno cadeiras, pAluno alunos, int tam) {
+
+   if (cadeiras == NULL || cadeiras->prox == NULL) {
+      printf("Não aplicável");
+      return;
+   } 
+
+   // aqui, a lista tem obrigatoriamente dois ou mais nós
+
+   int i, j;
+
+   pno penultimo = NULL;
+   penultimo = cadeiras;
+
+   while (penultimo->prox->prox != NULL) {
+      penultimo = penultimo->prox;
+   } // aqui ja temos um ponteiro para o penultimo nó/ disciplina
+
+   // vamos iterar sobre os alunos
+
+   for (i = 0; i < tam; i++) {
+
+      for (j = 0; j < 3; j++) {
+
+         if (alunos[i].v[j] == NULL) continue;
+
+         if (alunos[i].v[j] == penultimo) {
+            printf("Aluno: %s | Nº aluno: %d\n", alunos[i].nome, alunos[i].num);
+         }
+         
+      }
+      
+   }
+   
+}
 
 
 
