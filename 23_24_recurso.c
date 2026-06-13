@@ -9,6 +9,28 @@ struct a{
     int nLivros;  // Número de títulos no catálogo da livraria 
 };
 
+typedef struct {int mes, ano;} data; 
+typedef struct emCurso no, *pno; 
+ 
+struct emCurso{ 
+    int id; 
+    data inicio; 
+    pno prox; 
+}; 
+ 
+struct completo{ 
+    int id; 
+    data final; 
+    int duracao;  //duração em meses 
+}; 
+ 
+struct gestor{ 
+    int idG; 
+    pno lista; 
+    struct completo *v; 
+    int total; 
+};
+
 int main() {
 
    printf("estudasses!\n");
@@ -16,9 +38,7 @@ int main() {
    return 0;
 }
 
-// 1. (questão sobre ficheiros)
-/*
-
+// 1. (ficheiros)
 int f_livraria (char *f_texto, char *f_binario) {
 
    FILE *f_bin = fopen(f_binario, "rb+"); // ler o id e depois alterar nLivros
@@ -86,8 +106,31 @@ int f_livraria (char *f_texto, char *f_binario) {
    fclose(f_bin);
    return 1;
 }
-*/
 
+// 2. (listas ligadas)
+void mostrar_gestores (struct gestor *gestores, int tam) {
 
+   int i, n_emCurso;
+   pno emCurso_atual = NULL;
+
+   for (i = 0; i < tam; i++) {
+
+      n_emCurso = 0;
+
+      emCurso_atual = gestores[i].lista;
+      
+      while (emCurso_atual != NULL) {
+         n_emCurso++;
+         emCurso_atual = emCurso_atual->prox;
+      }
+
+      if (n_emCurso > gestores[i].total) {
+         printf("%d ", gestores[i].idG);
+      }
+      
+   }
+
+   
+}
 
 
