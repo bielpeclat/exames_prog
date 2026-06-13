@@ -14,6 +14,18 @@ typedef struct Farmaco {
     data terminouProducao; 
 } farmaco;
 
+typedef struct sala no, *pno; 
+struct sala{ 
+    char id[10]; 
+    int total; 
+    pno prox; 
+}; 
+ 
+typedef struct pessoa{ 
+    char nome[100], num[20]; 
+    pno p; 
+} aluno;
+
 int main() {
 
    printf("estudasses!\n");
@@ -24,6 +36,7 @@ int main() {
 // o ficheiro de texto tem os medicamentos produzidos pela empresa
 // passar para o f_bin os farmacos que deixaram de ser produzidos
 
+// ex. 1 (ficheiros)
 int f_farmacos (char *f_texto, char *f_binario, data hoje) {
 
    FILE *f_txt = fopen(f_texto, "r"); if (!f_txt) return -1;
@@ -69,3 +82,41 @@ int f_farmacos (char *f_texto, char *f_binario, data hoje) {
    
    return n_transferidos; // vamos mudar isso no futuro
 }
+
+// ex. 2 (listas ligadas) 
+int trocar_alunos (char *aluno1, char *aluno2, pno salas, aluno *vetor, int tam) {
+
+   aluno *pAluno1 = NULL;
+   aluno *pAluno2 = NULL;
+   pno aux = NULL;
+
+   int i;
+
+   for (i = 0; i < tam; i++) { // iterar sobre todos os alunos
+
+      if (strcmp(vetor[i].nome, aluno1) == 0) {
+         pAluno1 = &vetor[i];
+
+      } else if (strcmp(vetor[i].nome, aluno2) == 0) {
+         pAluno2 = &vetor[i];
+      }
+
+      if (pAluno1 && pAluno2) break; // early exit
+      
+   }
+
+   // vamos verificar se conseguimos encontrar ambos
+   if (!pAluno1 || !pAluno2) {
+      return -1;
+   }
+
+   aux = pAluno1->p;
+   pAluno1->p = pAluno2->p;
+   pAluno2->p = aux;
+
+   return 1;
+} // mais um que acertei tudo de primeira :)
+
+
+
+
