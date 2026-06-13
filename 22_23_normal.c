@@ -90,7 +90,7 @@ voo *f_aeroporto (char *f_binario, tempo hora_atual, char dest[4], int *tam) {
    
    
    fclose(f_bin);
-   return vetor; // vamos meter aqui o array dinamico
+   return vetor; 
 }
 
 
