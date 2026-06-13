@@ -15,6 +15,22 @@ typedef struct b{
     float preco;    // Preço do livro 
 } livro;
 
+typedef struct dadosUc   uc, *pUc; 
+typedef struct dadosSala sala, *pSala; 
+typedef struct {int dia, mes, ano;} data; 
+ 
+struct dadosUc{ 
+    char refUc[100];       //  Nome da Unidade Curricular 
+    data dataEx;           //  Data do exame 
+    pSala lista;           // Ponteiro para a lista de salas 
+}; 
+ 
+struct dadosSala{ 
+    char refSala[100];     //  Nome da sala 
+    int capacidade;        // Capacidade de sala 
+    pSala prox; 
+};
+
 int main() {
 
    printf("estudasses!\n");
@@ -22,6 +38,7 @@ int main() {
    return 0;
 }
 
+// 1. (ficheiros)
 int f_livraria (char *f_texto, char *f_binario, int id_funcao) {
 
    FILE *f_bin = fopen(f_binario, "rb+"); if (!f_bin) return 0;
@@ -110,4 +127,29 @@ int f_livraria (char *f_texto, char *f_binario, int id_funcao) {
    fclose(f_bin);
    return 1;
 }
+
+// 2. (listas ligadas)
+void mostrar_uc (pUc cadeiras, int tam, char *nome_sala) {
+
+   pSala atual_sala = NULL;
+   int i;
+
+   for (i = 0; i < tam; i++) {
+
+      atual_sala = cadeiras[i].lista;
+
+      while (atual_sala != NULL) {
+
+         if (strcmp(atual_sala->refSala, nome_sala) == 0) {
+            printf("%s\n", cadeiras[i].refUc);
+            break;
+         }
+
+         atual_sala = atual_sala->prox;
+      }
+      
+   }
+   
+}
+
 

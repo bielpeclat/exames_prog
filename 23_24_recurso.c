@@ -133,4 +133,7 @@ void mostrar_gestores (struct gestor *gestores, int tam) {
    
 }
 
+// 3. (listas ligadas)
+
+
 
