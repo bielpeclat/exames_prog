@@ -1,10 +1,9 @@
 // Gabriel Peclat dos Reis Costa, Eng. Informática
 // 2025140643, ISEC - PT
 
-// 1. (pergunta sobre ficheiros)
-
-
 #include <stdio.h>
+#include <string.h>
+
 typedef struct drone dr;
 struct drone { 
     char id[20];      // identificador alfanumérico do drone 
@@ -30,7 +29,7 @@ struct disciplina{
 
 int main() {
 
-   printf("gabriel peclat\n2025140643, isec, pt");
+   printf("estudasses!\n");
 
    return 0;
 }
@@ -130,6 +129,72 @@ void mostra_alunos (pno cadeiras, pAluno alunos, int tam) {
 }
 
 // ex. 3 (listas ligadas)
+pno add_disciplina (char *nome, int id, pno lista, pAluno alunos, int tam) {
 
+   // primeiro, vamos add uma nova disciplina a lista (insercao ordenada)
+   pno atual_lista = lista;
+   int i, j, n_disc_local;
 
+   pno no_novo = malloc(sizeof(no)); // alocando memoria para 1 disciplina
+   if (!no_novo) return lista;
+
+   // atribuicao dos campos da nova disciplina
+   strcpy(no_novo->nome, nome);        // nome
+   no_novo->id = id;                   // id
+   no_novo->conta = 0;                 // nenhum aluno ainda
+
+   // insercao no (inicio) vs (meio ou fim)
+
+   // vamos comecar com insercao no inicio ou em lista vazia
+   if (lista == NULL || id < atual_lista->id) {
+      no_novo->prox = atual_lista;
+      lista = no_novo;
+   } 
+   
+   // insercao no meio ou fim
+   else {
+
+      if (id == atual_lista->id) {
+         free(no_novo);
+         return lista;
+      }
+
+      while (atual_lista->prox != NULL && atual_lista->prox->id < id) {
+         atual_lista = atual_lista->prox;
+      } 
+      // aqui estamos na posicao correta
+
+      if (atual_lista->prox != NULL && atual_lista->prox->id == id) {
+         free(no_novo);
+         return lista;
+      }
+
+      no_novo->prox = atual_lista->prox;
+      atual_lista->prox = no_novo;
+   } // aqui ja inserimos a disciplina
+
+   // agora precisamos inserir os alunos com n_disc < 2 para a nova disciplina
+   for (i = 0; i < tam; i++) {                  // iterar sobre os alunos
+
+      n_disc_local = 0;
+      for(j = 0; j < 3; j++) {                  // iterar sobre as disciplinas
+
+         if (alunos[i].v[j] != NULL) {
+            n_disc_local++;
+         }
+         
+      }
+      
+      if (n_disc_local < 2) {
+         alunos[i].v[n_disc_local] = no_novo;
+         no_novo->conta++;
+      }
+      
+   }
+   
+   return lista;
+}
+
+// 4. recursividade
+// resposta: 2366
 

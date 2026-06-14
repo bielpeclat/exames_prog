@@ -117,6 +117,6 @@ int trocar_alunos (char *aluno1, char *aluno2, pno salas, aluno *vetor, int tam)
    return 1;
 } // mais um que acertei tudo de primeira :)
 
-
+// ex. 3 (listas ligadas 2)
 
 
